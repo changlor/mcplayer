@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import { editAudioStatus } from '../vuex/actions.js'
-import { getAudioStatus } from '../vuex/getters.js'
+import audioCtrlApi from '../vuex/actions.js'
+import audioDataApi from '../vuex/getters.js'
 export default {
   data () {
     return {
@@ -17,10 +17,10 @@ export default {
   },
   vuex: {
     actions: {
-      changeAudioStatus: editAudioStatus
+      changeAudioStatus: audioCtrlApi.editStatus
     },
     getters: {
-      isStart: getAudioStatus
+      isStart: audioDataApi.getAudioStatus
     }
   },
   methods: {
@@ -33,9 +33,9 @@ export default {
       .catch((error) => {
         console.error(error);
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

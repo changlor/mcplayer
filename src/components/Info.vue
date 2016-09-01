@@ -10,9 +10,7 @@
 </template>
 
 <script>
-import { getAudioStatus } from '../vuex/getters.js'
-import { getSongInfo } from '../vuex/getters.js'
-import { getAudioProgress } from '../vuex/getters.js'
+import audioDataApi from '../vuex/getters.js'
 export default {
   data () {
     return {
@@ -22,9 +20,9 @@ export default {
   vuex: {
     getters: {
       //注意这里你需要 'getCount' 函数本身而不是它的执行结果 'getCount()'
-      audioStatus: getAudioStatus,
-      songInfo: getSongInfo,
-      audioProgress: getAudioProgress
+      audioStatus: audioDataApi.getAudioStatus,
+      songInfo: audioDataApi.getSongInfo,
+      audioProgress: audioDataApi.getAudioProgress
     }
   }
 }
