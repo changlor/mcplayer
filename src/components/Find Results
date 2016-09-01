@@ -1,0 +1,44 @@
+Searching 43 files for "(plugin.installed"
+
+/Users/changle/Documents/htdocs/myproject/mcplayer/node_modules/vue-resource/dist/vue-resource.common.js:
+ 1262  function plugin(Vue) {
+ 1263  
+ 1264:     if (!plugin.installed) {
+ 1265          return;
+ 1266      }
+
+/Users/changle/Documents/htdocs/myproject/mcplayer/node_modules/vue-resource/dist/vue-resource.es2015.js:
+ 1260  function plugin(Vue) {
+ 1261  
+ 1262:     if (!plugin.installed) {
+ 1263          return;
+ 1264      }
+
+/Users/changle/Documents/htdocs/myproject/mcplayer/node_modules/vue-resource/dist/vue-resource.js:
+ 1266    function plugin(Vue) {
+ 1267  
+ 1268:       if (!plugin.installed) {
+ 1269            return;
+ 1270        }
+
+/Users/changle/Documents/htdocs/myproject/mcplayer/node_modules/vue-resource/src/index.js:
+   11  function plugin(Vue) {
+   12  
+   13:     if (!plugin.installed) {
+   14          return;
+   15      }
+
+/Users/changle/Documents/htdocs/myproject/mcplayer/node_modules/vue-resource/test/specs.js:
+ 10060  	  Vue.use = function (plugin) {
+ 10061  	    /* istanbul ignore if */
+ 10062: 	    if (!plugin.installed) {
+ 10063  	      return;
+ 10064  	    }
+ .....
+ 10267  	function plugin(Vue) {
+ 10268  
+ 10269: 	    if (!plugin.installed) {
+ 10270  	        return;
+ 10271  	    }
+
+6 matches across 5 files
