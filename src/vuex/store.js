@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
 //告诉 vue "使用" vuex
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 //创建一个对象来保存应用启动时的初始状态
 const state = {
@@ -12,14 +12,15 @@ const state = {
     audioProgress: {
         currentTime: 0,
         length: 0,
-        completionRate: 0
+        completionRate: 0,
+        bufferedRate: 0,
     },
     body: {
-        url: 'http://m2.music.126.net/t24d6GoZRkqxzFAovlZEQw==/6027522743661760.mp3',
+        url: 'http://m2.music.126.net/v6539YJHJVUsDdqm9UhBmw==/6037418348311744.mp3?xx=21222222',
         songName: '不如跳舞',
-        artistName: '陈慧琳' 
-    }
-}
+        artistName: '陈慧琳',
+    },
+};
 
 //创建一个对象储存一系列我们解析来要写的 mutation 函数
 
@@ -37,14 +38,11 @@ const mutations = {
         //state.body.songName = info.songName
         //state.body.artistName = info.artistName
     },
-    AUDIO_CURRENT_TIME (state, currentTime) {
-        state.currentTime = currentTime
-    }
-}
+};
 
 //整合初始状态和变更函数，我们就得到了我们所需的 stroe
 //至此，这个 store 就可以连接到我们的应用中
 export default new Vuex.Store({
     state,
-    mutations
-})
+    mutations,
+});

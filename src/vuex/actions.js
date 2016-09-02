@@ -11,9 +11,6 @@ class audioCtrlApi {
   static fetchSongInfo ({ dispatch, info }) {
     dispatch('BODY_INFO', info);
   }
-  static updateProgress ({ dispatch }, audioProgress) {
-    dispatch('AUDIO_CURRENT_TIME', audioProgress);
-  }
 };
 
 export default audioCtrlApi;

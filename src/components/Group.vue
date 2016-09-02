@@ -7,20 +7,20 @@
 </template>
 
 <script>
-import audioCtrlApi from '../vuex/actions.js'
-import audioDataApi from '../vuex/getters.js'
+import audioCtrlApi from '../vuex/actions.js';
+import audioDataApi from '../vuex/getters.js';
 export default {
   data () {
     return {
       isReady: false,
-    }
+    };
   },
   vuex: {
     actions: {
-      changeAudioStatus: audioCtrlApi.editStatus
+      changeAudioStatus: audioCtrlApi.editStatus,
     },
     getters: {
-      isStart: audioDataApi.getAudioStatus
+      isStart: audioDataApi.getAudioStatus,
     }
   },
   methods: {
@@ -28,7 +28,7 @@ export default {
       fetch('https://www.baidu.com')
       .then((response) => response.json())
       .then((response) => {
-        console.log(response.result.hitokoto)
+        console.log(response.result.hitokoto);
       })
       .catch((error) => {
         console.error(error);

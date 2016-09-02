@@ -1,22 +1,18 @@
 <template>
   <input class="mcp-ai">
-  <a class="feel-lucky">search</a>
+  <a class="feel-lucky" v-on:click="">search</a>
 </template>
 
 <script>
-import audioCtrlApi from '../vuex/actions.js';
 import audioDataApi from '../vuex/getters.js';
 
 export default {
   data () {
     return {
       audio: document.createElement('audio'),
-    }
+    };
   },
   vuex: {
-    actions: {
-      updateAudioProgress: audioCtrlApi.updateProgress
-    },
     getters: {
       isStart: audioDataApi.getAudioStatus,
       songInfo: audioDataApi.getSongInfo,
@@ -24,14 +20,20 @@ export default {
     }
   },
   ready () {
-    this.audio.src = this.songInfo.url;
-    this.audio.updateAudioProgress = this.updateAudioProgress;
+    navigator.userAgent.indexOf('Chrome') > -1
+    ? this.audio.src = this.songInfo.url + '?mcp-t=' + new Date().getTime()
+    : this.audio.src = this.songInfo.url;
+    this.audio.preload = 'auto';
     this.audio.audioProgress = this.audioProgress;
+    this.audio.addEventListener('progress', function() {
+      this.readyState == 4
+      ? this.audioProgress.bufferedRate = this.buffered.end(this.length - 1) * 100 / this.duration
+      : false;
+    });
     this.audio.addEventListener('timeupdate', function() {
       this.audioProgress.currentTime = this.currentTime;
       this.audioProgress.length = this.duration;
       this.audioProgress.completionRate = this.currentTime * 100 / this.duration;
-      this.updateAudioProgress(this.audioProgress);
     });
   },
   watch: {

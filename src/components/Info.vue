@@ -4,28 +4,29 @@
     <a class="song-name">{{ songInfo.songName }}</a>
     <a class="artist-name">{{ songInfo.artistName }}</a>
     <div class="pro-g">
-      <div class="pro-g-bar" role="progressbar" aria-valuenow="600" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: audioProgress.completionRate + '%' }"></div>
+      <div class="prog-bar" role="progressbar" aria-valuenow="600" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: audioProgress.completionRate + '%' }"></div>
+      <div class="prog-bar pre-prog" role="progressbar" aria-valuenow="600" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: audioProgress.bufferedRate + '%' }"></div>
     </div>
   </div>
 </template>
 
 <script>
-import audioDataApi from '../vuex/getters.js'
+import audioDataApi from '../vuex/getters.js';
 export default {
   data () {
     return {
-      msg: 'Hello World!'
-    }
+      msg: 'Hello World!',
+    };
   },
   vuex: {
     getters: {
       //注意这里你需要 'getCount' 函数本身而不是它的执行结果 'getCount()'
       audioStatus: audioDataApi.getAudioStatus,
       songInfo: audioDataApi.getSongInfo,
-      audioProgress: audioDataApi.getAudioProgress
-    }
-  }
-}
+      audioProgress: audioDataApi.getAudioProgress,
+    },
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -63,8 +64,11 @@ export default {
   overflow-x: hidden;
   overflow-y: hidden;
   width: 300px;
+  position:relative;
 }
-.pro-g-bar {
+.prog-bar {
+  z-index: 2;
+  position: absolute;
   background-color: rgba(238, 110, 115, 1);
   box-shadow: rgba(0, 0, 0, 0.14902) 0px -1px 0px 0px inset;
   box-sizing: border-box;
@@ -78,5 +82,9 @@ export default {
   transition-property: width;
   transition-timing-function: ease;
   width: 489.297px;
+}
+.pre-prog {
+  z-index: 1;
+  background-color: #ddd;
 }
 </style>
