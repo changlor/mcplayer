@@ -20,9 +20,9 @@ export default {
     }
   },
   ready () {
-    navigator.userAgent.indexOf('Chrome') > -1
-    ? this.audio.src = this.songInfo.url + '?mcp-t=' + new Date().getTime()
-    : this.audio.src = this.songInfo.url;
+    //navigator.userAgent.indexOf('Chrome') > -1
+    //? this.audio.src = this.songInfo.url + '?mcp-t=' + new Date().getTime():
+    this.audio.src = this.songInfo.url;
     this.audio.preload = 'auto';
     this.audio.audioProgress = this.audioProgress;
     this.audio.addEventListener('progress', function() {
