@@ -1,8 +1,8 @@
 <template>
   <div class="mcp info clearfix">
     <a class="mask"></a>
-    <a class="song-name">{{ songInfo.songName }}</a>
-    <a class="artist-name">{{ songInfo.artistName }}</a>
+    <a class="song-name">{{ songInfo[songKey].songName }}</a>
+    <a class="artist-name">{{ songInfo[songKey].artistName }}</a>
     <div class="pro-g">
       <div class="prog-bar" role="progressbar" aria-valuenow="600" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: audioProgress.completionRate + '%' }"></div>
       <div class="prog-bar pre-prog" role="progressbar" aria-valuenow="600" aria-valuemin="0" aria-valuemax="100" v-bind:style="{ width: audioProgress.bufferedRate + '%' }"></div>
@@ -24,6 +24,7 @@ export default {
       audioStatus: audioDataApi.getAudioStatus,
       songInfo: audioDataApi.getSongInfo,
       audioProgress: audioDataApi.getAudioProgress,
+      songKey: audioDataApi.getSongKey,
     },
   },
 };

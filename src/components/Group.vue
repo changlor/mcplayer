@@ -1,8 +1,8 @@
 <template>
   <div class="mcp group clearfix">
     <a v-on:click="changeAudioStatus" v-bind:class="['btn', isStart ? 'pause' : 'start']"></a>
-    <a class="btn prev"></a>
-    <a class="btn next"></a>
+    <a v-on:click="switchSong(songKey - 1)" class="btn prev"></a>
+    <a v-on:click="switchSong(songKey + 1)" class="btn next"></a>
     <a v-on:click="switchBtn" v-bind:class="['btn-switch', playerModel[modelKey].className]"></a>
   </div>
 </template>
@@ -14,20 +14,22 @@ export default {
   data () {
     return {
       isReady: false,
-      modelKey: 0,
-      playerModel: [
-        { className:'shuffle',callback: () => { console.log('xx') } },
-        { className:'order-repeat' },
-        { className:'once-repeat' }
-      ]
+
     };
   },
   vuex: {
     actions: {
       changeAudioStatus: audioCtrlApi.editStatus,
+      stopAudio: audioCtrlApi.stop,
+      updateSongKey: audioCtrlApi.updateSongKey,
+      updateModelKey: audioCtrlApi.updateModelKey,
     },
     getters: {
       isStart: audioDataApi.getAudioStatus,
+      songKey: audioDataApi.getSongKey,
+      songInfo: audioDataApi.getSongInfo,
+      modelKey: audioDataApi.getPlayerModelKey,
+      playerModel: audioDataApi.getPlayerModel,
     }
   },
   methods: {
@@ -42,8 +44,24 @@ export default {
       });
     },
     switchBtn () {
-      this.modelKey >= 2 ? this.modelKey = 0 : this.modelKey++;
-    }
+      let modelKey = this.modelKey;
+      modelKey >= 2 ? modelKey = 0 : modelKey++;
+      this.updateModelKey(modelKey);
+    },
+    switchSong (songKey) {
+      this.stopAudio();
+      const songNumber = this.songInfo.length - 1;
+      if (this.playerModel[this.modelKey].className == 'shuffle') {
+        songKey =  Math.floor(Math.random() * this.songInfo.length);
+      }
+      if (songKey < 0) {
+        songKey = songNumber;
+      }
+      if (songKey > songNumber) {
+        songKey = 0;
+      }
+      this.updateSongKey(songKey);
+    },
   },
 };
 

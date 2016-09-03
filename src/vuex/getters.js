@@ -2,10 +2,12 @@
 //在 ES6 里你可以写成：
 //export const getCount = state => state.count
 class audioDataApi {
-    static getCount = state => state.count;
+    static getSongKey = state => state.songKey;
     static getAudioStatus = state => state.audioStatus;
     static getSongInfo = state => state.body;
     static getAudioProgress = state => state.audioProgress;
+    static getPlayerModelKey = state => state.modelKey;
+    static getPlayerModel = state => state.playerModel;
 };
 
 export default audioDataApi;

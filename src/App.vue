@@ -10,24 +10,24 @@
 </template>
 
 <script>
-import Info from './components/Info.vue'
-import Group from './components/Group.vue'
-import Audio from './components/Audio.vue'
-import store from './vuex/store.js'
+import Info from './components/Info.vue';
+import Group from './components/Group.vue';
+import Audio from './components/Audio.vue';
+import store from './vuex/store.js';
 
 export default {
   data () {
     return {
-      isStart: false
-    }
+      isStart: false,
+    };
   },
   components: {
     Info,
     Group,
     Audio
   },
-  store
-}
+  store,
+};
 </script>
 
 <style>
