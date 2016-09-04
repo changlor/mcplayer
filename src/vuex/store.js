@@ -26,6 +26,7 @@ const state = {
         }
     ],
     audioStatus: false,
+    audioEndedStatus: false,
     audioProgress: {
         currentTime: 0,
         length: 0,
@@ -70,6 +71,9 @@ const mutations = {
     },
     AUDIO_STATUS (state) {
         state.audioStatus = !state.audioStatus;
+    },
+    AUDIO_ENDED_STATUS (state, status) {
+        state.audioEndedStatus = status;
     },
     BODY_INFO (state, info) {
         //state.body.url = info.url

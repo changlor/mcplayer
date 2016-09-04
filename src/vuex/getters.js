@@ -8,6 +8,7 @@ class audioDataApi {
     static getAudioProgress = state => state.audioProgress;
     static getPlayerModelKey = state => state.modelKey;
     static getPlayerModel = state => state.playerModel;
+    static getAudioEndedStatus = state => state.audioEndedStatus;
 };
 
 export default audioDataApi;

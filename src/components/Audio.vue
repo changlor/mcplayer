@@ -26,6 +26,7 @@ export default {
       playAudio: audioCtrlApi.play,
       stopAudio: audioCtrlApi.stop,
       updateSongKey: audioCtrlApi.updateSongKey,
+      audioEnded: audioCtrlApi.endedAudioPlayStatus,
     }
   },
   ready () {
@@ -58,8 +59,10 @@ export default {
 
     //监测播放完成事件
     this.audio.stopAudio = this.stopAudio;
-    this.audio.addEventListener('ended', function(){
+    this.audio.audioEnded = this.audioEnded;
+    this.audio.addEventListener('ended', function() {
       this.stopAudio();
+      this.audioEnded();
     });
   },
   watch: {

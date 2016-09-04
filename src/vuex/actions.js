@@ -11,6 +11,12 @@ class audioCtrlApi {
   static editStatus ({ dispatch }) {
     dispatch('AUDIO_STATUS');
   }
+  static endedAudioPlayStatus ({ dispatch }) {
+    dispatch('AUDIO_ENDED_STATUS', true);
+  }
+  static startAudioPlayStatus ({ dispatch }) {
+    dispatch('AUDIO_ENDED_STATUS', false);
+  }
   static fetchSongInfo ({ dispatch, info }) {
     dispatch('BODY_INFO', info);
   }

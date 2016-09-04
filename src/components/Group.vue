@@ -1,7 +1,7 @@
 <template>
   <div class="mcp group clearfix">
     <a v-on:click="changeAudioStatus" v-bind:class="['btn', isStart ? 'pause' : 'start']"></a>
-    <a v-on:click="switchSong(songKey - 1)" class="btn prev"></a>
+    <a v-on:click="switchSong(songKey - 1)" class="btn prev"></a>{{ isEnded }}
     <a v-on:click="switchSong(songKey + 1)" class="btn next"></a>
     <a v-on:click="switchBtn" v-bind:class="['btn-switch', playerModel[modelKey].className]"></a>
   </div>
@@ -13,16 +13,17 @@ import audioDataApi from '../vuex/getters.js';
 export default {
   data () {
     return {
-      isReady: false,
-
+      areYouReady: false,
     };
   },
   vuex: {
     actions: {
       changeAudioStatus: audioCtrlApi.editStatus,
       stopAudio: audioCtrlApi.stop,
+      playAudio: audioCtrlApi.play,
       updateSongKey: audioCtrlApi.updateSongKey,
       updateModelKey: audioCtrlApi.updateModelKey,
+      audioStart: audioCtrlApi.startAudioPlayStatus,
     },
     getters: {
       isStart: audioDataApi.getAudioStatus,
@@ -30,6 +31,7 @@ export default {
       songInfo: audioDataApi.getSongInfo,
       modelKey: audioDataApi.getPlayerModelKey,
       playerModel: audioDataApi.getPlayerModel,
+      isEnded: audioDataApi.getAudioEndedStatus,
     }
   },
   methods: {
@@ -48,7 +50,7 @@ export default {
       modelKey >= 2 ? modelKey = 0 : modelKey++;
       this.updateModelKey(modelKey);
     },
-    switchSong (songKey) {
+    switchSong (songKey, endedSwitch = false) {
       this.stopAudio();
       const songNumber = this.songInfo.length - 1;
       if (this.playerModel[this.modelKey].className == 'shuffle') {
@@ -61,9 +63,19 @@ export default {
       if (songKey > songNumber) {
         songKey = 0;
       }
-      this.updateSongKey(songKey);
+      this.playerModel[this.modelKey].className == 'once-repeat' && endedSwitch
+      ? this.playAudio()
+      : this.updateSongKey(songKey);
     },
   },
+  watch: {
+    isEnded: function (val) {
+      if (val) {
+        this.switchSong(this.songKey + 1, true);
+        this.audioStart();
+      }
+    }
+  }
 };
 
 </script>
