@@ -1,7 +1,7 @@
 <template>
   <div class="mcp group clearfix">
     <a v-on:click="changeAudioStatus" v-bind:class="['btn', isStart ? 'pause' : 'start']"></a>
-    <a v-on:click="switchSong(songKey - 1)" class="btn prev"></a>{{ isEnded }}
+    <a v-on:click="switchSong(songKey - 1)" class="btn prev"></a>
     <a v-on:click="switchSong(songKey + 1)" class="btn next"></a>
     <a v-on:click="switchBtn" v-bind:class="['btn-switch', playerModel[modelKey].className]"></a>
   </div>

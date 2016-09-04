@@ -40,7 +40,7 @@ export default {
     this.audio.updateSongKey = this.updateSongKey;
     this.audio.addEventListener('error', function() {
       console.log('播放失败，自动为您切换至下一首歌');
-      this.updateSongKey(0);
+      this.updateSongKey(this.songKey + 1);
     });
 
     this.audio.audioProgress = this.audioProgress;
@@ -74,6 +74,37 @@ export default {
         switch (this.retry)
         {
           case 0:
+            this.stopAudio();
+            break;
+          case 1:
+            //通过progress事件反复跟踪readystate
+
+            //定义一个判断是否播放成功的变量
+            let isSuccess = false;
+
+            this.audio.playAudio = this.playAudio;
+            const reTryPlay = function () {
+              if (this.readyState == 4) {
+                this.playAudio();
+                isSuccess = true;
+                this.removeEventListener('progress', reTryPlay);
+              }
+            };
+
+            //10s之后如果仍然不行，抛出错误
+            const retryTime = 10000;
+            //对于匿名函数，定义一个指向audio的指针
+            let audio = this.audio;
+            audio.playAudio = this.playAudio;
+            audio.addEventListener('progress', reTryPlay);
+            setTimeout(function () {
+              if (!isSuccess) {
+                audio.playAudio();
+              }
+              audio.removeEventListener('progress', reTryPlay);
+            }, retryTime);
+            break;
+          case 2:
             console.log('播放失败，请重试');
             this.stopAudio();
             //重置播放器
