@@ -53,6 +53,7 @@ export default {
       const songNumber = this.songInfo.length - 1;
       if (this.playerModel[this.modelKey].className == 'shuffle') {
         songKey =  Math.floor(Math.random() * this.songInfo.length);
+        songKey == this.songKey ? songKey++ : false;
       }
       if (songKey < 0) {
         songKey = songNumber;

@@ -12,6 +12,7 @@ export default {
     return {
       audio: document.createElement('audio'),
       retry: 0,
+      btnClickNumber: 0,
     };
   },
   vuex: {
@@ -25,8 +26,6 @@ export default {
       playAudio: audioCtrlApi.play,
       stopAudio: audioCtrlApi.stop,
       updateSongKey: audioCtrlApi.updateSongKey,
-      modelKey: audioDataApi.getPlayerModelKey,
-      playerModel: audioDataApi.getPlayerModel,
     }
   },
   ready () {
@@ -87,14 +86,30 @@ export default {
       }
     },
     songKey: function (val) {
+      //切换按钮每点一次，此计数器＋1
+      this.btnClickNumber++;
+
+      this.stopAudio();
       navigator.userAgent.indexOf('Chrome') > -1
       ? this.audio.src = this.songInfo[this.songKey].url + '?mcp-t=' + new Date().getTime()
       : this.audio.src = this.songInfo[this.songKey].url;
       this.audio.playAudio = this.playAudio;
-      const readyToPlay = function () {
-        this.playAudio();
-        this.removeEventListener('canplaythrough', readyToPlay);
-      };
+      this.audio.stopAudio = this.stopAudio;
+
+      //被逼无奈之举，当用户点击多次后，无法取消之前的定时器，被迫选择了计数器
+      let $this = this;
+      const readyToPlay = setTimeout(function () {
+        //多次点击后，计数器大于一，只有当计数器为一，即最后一次有效
+        if ($this.btnClickNumber == 1) {
+            $this.audio.playAudio();
+        }
+        //将点击计数－1，无效化一次点击事件
+        $this.btnClickNumber > 0 ? $this.btnClickNumber-- : false;
+        //多次点击之后各个定时器之间可能存在干扰导致计数器小于零，使得程序永远无法继续运转，因此加一个保险措施
+        $this.btnClickNumber < 0 ? $this.btnClickNumber = 0 : false;
+        $this.audio.removeEventListener('canplaythrough', readyToPlay);
+      }, 2000);
+
       this.audio.addEventListener('canplaythrough', readyToPlay);
     }
   },
