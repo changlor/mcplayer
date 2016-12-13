@@ -5,6 +5,7 @@
     <a v-on:click="switchSong(songKey + 1)" class="btn next"></a>
     <a v-on:click="switchBtn" v-bind:class="['btn-switch', playerModel[modelKey].className]"></a>
   </div>
+  <div class="shadow"></div>
 </template>
 
 <script>
@@ -82,6 +83,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@keyframes loading {
+    from {transform: rotateY(120deg);}
+    to {transform: rotateY(0deg);}
+}
+.shadow {
+  position: fixed;
+  background-color: white;
+  width: 100px;
+  height: 100px;
+  animation: loading 1.6s 1;
+}
 .group {
   margin: 5px;
   background-color: #fff;
